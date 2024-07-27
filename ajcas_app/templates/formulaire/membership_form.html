@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href=" {% static 'assets/vendor/aos/aos.css' %} " rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %} " rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %} " rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %} " rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %} " rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %} " rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %} " rel="stylesheet">
+</head>
+
+
+<main id="main">
+    <div class="container">
+
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              <div class="d-flex justify-content-center py-4">
+                <a href="" class="logo d-flex align-items-center w-auto">
+                  <img src="{% static './assets/img/logo.png' %}" width="150" height="150" alt="">
+                 
+                </a>
+              </div><!-- End Logo --><!-- End Logo -->
+
+              <div class="card mb-3">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Creer Un compte</h5>
+                    <p class="text-center small">entrer les details </p>
+                  </div>
+
+                  <form method="post" action="" class="row g-3 needs-validation" >
+                    {% csrf_token %}
+                    <div class="col-12">
+                      <label for="yourName" class="form-label">Nom</label>
+                            {{form.username}}
+                      <div class="invalid-feedback">svp, entrer le nom!</div>
+                    </div>
+                    
+                    <div class="col-12">
+                      <label for="yourEmail" class="form-label">Email</label>
+                      {{form.email}}
+                      <div class="invalid-feedback">svp enter enter l'email valide!</div>
+                    </div>
+                    
+                    <div class="col-12">
+                      <label for="yourPassword" class="form-label">Mot de passe</label>
+                      {{form.password1}}
+                      <div class="invalid-feedback">svp entrer le mot de passe!</div>
+                    </div>
+                    <div class="col-12">
+                      <label for="yourPassword" class="form-label"> confirmer Mot de passe</label>
+                      {{form.password2}}
+                      <div class="invalid-feedback">svp entrer le mot de passe!</div>
+                    </div>
+             
+                    <div class="col-12">
+                      <button class="btn btn w-100"style="background-color: rgb(233, 35, 9); color:white;"  type="submit">creer un compte</button>
+                    </div>
+                    <div class="col-12">
+                      <p class="small mb-0"> <a href=" {% url 'ajcas_app:login' %}">As tu un compte deja?</a></p>
+                      {% for message in messages %}
+                      {% if messages.success %}
+                      <p class="alert alert-success">{{message}}</p>
+                      {% else %}
+                      <p class="alert alert-danger">{{message}}</p>
+                      {% endif %}
+  
+                      {% endfor %}
+                    </div>
+                    
+                  </form>
+                {{form.errors}}
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+   <!-- ======= Footer ======= -->
+
+<!-- End Footer --><!-- End Footer -->
+  <script src=" {% static 'assets/vendor/purecounter/purecounter_vanilla.js' %} "></script>
+  <script src=" {% static 'assets/vendor/aos/aos.js' %} "></script>
+  <script src=" {% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %} "></script>
+  <script src=" {% static 'assets/vendor/glightbox/js/glightbox.min.js' %} "></script>
+  <script src=" {% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %} "></script>
+  <script src=" {% static 'assets/vendor/swiper/swiper-bundle.min.js' %} "></script>
+  <script src=" {% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %} "></script>
+</body>
+
+</html>

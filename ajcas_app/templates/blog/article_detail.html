@@ -1,0 +1,121 @@
+{%extends 'base.html'%}
+{%include "./intro.html"%}
+
+{%load static%}
+   {%block content%}
+   
+        <!-- Page Title -->
+        <div class="hero hero-container " style="padding-top: 150px;">
+            <div class="heading">
+              <div class="container">
+                <div class="row d-flex justify-content-center text-center">
+                  <div class="col-lg-8">
+                    <h1>{{ article.title }}</h1>
+                    <p class="mb-0">Voici nos Articles</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <nav class="breadcrumbs">
+              <div class="container">
+                <ol>
+                  <li><a href="{% url 'ajcas_app:article_list'%} ">Articles</a></li>
+                  <li class="current">Article</li>
+                </ol>
+              </div>
+            </nav>
+          </div><!-- End Page Title -->
+    <div class="container mt-4">
+        <div class="blog-header mb-4">
+            <img src="{{ article.image.url }}" class="img-fluid" alt="...">
+            <div class="overlay">
+                <h1>{{ article.title }}</h1>
+                <div class="blog-stats">
+                    <div>
+                      {%if request.user.is_authenticated%}
+                        <span><a href="{% url 'ajcas_app:like_article' article.pk %}" class="text-muted"><i class="bi bi-heart"></i></a> {{ article.likes.count }} |</span>
+                      {%else%}
+                      <span><a href="{% url 'ajcas_app:login'%}" class="text-muted"><i class="bi bi-heart"></i></a> {{ article.likes.count }} |</span>
+                      {%endif%}
+                        <span><i class="bi bi-eye"></i> {{ article.views }} Vues</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+         
+            <div class="col-md-8">
+                <p>{{ article.content }}</p>
+                <div class="text-muted">
+                    Publié par {{ article.author }} le {{ article.created_at }}
+                </div>
+
+                <p class="mt-2">{{ all_comments }} Commentaires</p>
+                {% for comment in comments %}
+                <div class="card mb-1" style="border: none;">
+                    <div class="card-body">
+                       <img src="{%if comment.author.image%} {{ comment.author.image.url }} {%else%} {% static 'assets/img/log.jpg'%} {%endif%}" alt="" srcset="" style="width: 2vw; height: 2vw; border-radius: 50%;"> <i class="card-title text-primary"> {%if comment.author.image %}{{ comment.author }} {% else %} {{ comment.author.user }} {%endif%}/ <i class="text-muted text-sm">{{ comment.created_at }}</i></i>
+                        <small class="card-text d-lg-block " style="margin-left: 30px;">{{ comment.content }} </small>
+                        <hr>
+                        
+                    </div>
+                </div>
+                {% endfor %}
+
+                <h3 class="mt-4">Ajouter un commentaire</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    {%if request.user.is_authenticated %}
+                    <button type="submit" class="btn btn-warning">Envoyer</button>
+                       {% else %} 
+                      <a href="{% url 'ajcas_app:login'%}" class="btn btn-warning">Envoyer</a> 
+                      {%endif%}
+                </form>
+            </div>
+
+            <div class="col-md-4 shadow mb-2">
+                 <div class="row p-2">
+                    <h4>Que Recherchez-vous</h4>
+                    <form action="" method="get" class="">
+                        <div class="form-group">
+                            <input type="search" name="look" id="" class="form-control" placeholder="Recherche">
+                        </div>
+                    </form>
+                 </div>
+                <div class="suggestions  p-2 "> 
+                    <h4  class="card-title text-lef">simulaires</h4>
+                    
+                    
+                    <div class="card " style="border: none;">
+                      {% if cat_articles %}
+                        {% for cat_article in cat_articles %}
+                        <div class="card-body" style="padding-bottom: 0;">
+                            <h5 class="card-title">{{ cat_article.title|truncatewords:7 }}</h5>
+                            <i class="card-text">{{ cat_article.content|truncatewords:7 }}<a href="{% url 'ajcas_app:article_detail' cat_article.pk %}" class="btn btn-link">Lire la suite</a></i>
+                            <hr>
+                        </div>
+                          {% endfor %}
+                          {% else %}
+                          <p>pas d'articles simulaires</p>
+                          {% endif  %}
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+ 
+ {%endblock content%}   

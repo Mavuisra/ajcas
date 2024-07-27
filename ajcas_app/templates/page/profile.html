@@ -1,0 +1,161 @@
+{% extends 'base.html'%}
+
+{%load static%}
+
+
+{% block title %}Accueil/ajcas{%endblock%}
+
+{%block content%}
+
+<div class="container">
+  <div class="row pt-5">
+    <div class="container pt-4">
+      <div class="profile-cover d-flex align-items-center justify-content-center card ">
+        <h1>AjCAS SAUVEZ DES VIES</h1>
+      </div>
+      <div class="text-center profile-picture">
+        <img
+          src="{%if request.user.member.image%} {{request.user.member.image.url}} {%else%} {% static 'assets/img/logo.png'%} {%endif%}"
+          class="img-fluid " style="border: 8px solid rgb(248, 32, 17); border-radius: 50%;" alt="Profile Picture">
+      </div>
+      <div class="profile-info text-center">
+        <h2>{%if request.user.member.member_signature %}{{request.user.member.full_name}} {%else%} {{request.user}}
+          {%endif%}</h2>
+        <p>{%if request.user.member.member_signature %}</p>
+        <p class="text-success text-bold">Vous êtes conformé <i class="fa fa-check"></i></p>
+        {%else%}
+        <p class="text-danger">Veuillez confirmer votre adhesoin </p>
+        {%endif%}
+
+      </div>
+      <nav class="profile-nav">
+        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+          <a style="color:rgb(255, 60, 0);" class=" nav-link active" id="nav-posts-tab" data-bs-toggle="tab"
+            href="#nav-posts" role="tab" aria-controls="nav-posts" aria-selected="true">Vos informations</a>
+          <a style="color:rgb(255, 60, 0);" class="nav-link" id="nav-about-tab" data-bs-toggle="tab" href="#nav-about"
+            role="tab" aria-controls="nav-about" aria-selected="false">Modifier</a>
+          <a style="color:rgb(255, 60, 0);" class="nav-link" id="nav-friends-tab" data-bs-toggle="tab"
+            href="#nav-friends" role="tab" aria-controls="nav-friends" aria-selected="false">news</a>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
+          <!-- Post content goes here -->
+          <h3></h3>
+          <div class="tab-content pt-2">
+
+            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+
+              <h5 class="card-title">profile</h5>
+              {% if request.user.member.member_signature %}
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label ">NOM, POST NOM ET PRENOM</div>
+                <div class="col-lg-9 col-md-8">{{request.user.member.full_name }}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Poste</div>
+                <div class="col-lg-9 col-md-8">Membre</div>
+              </div>
+
+
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">SEXE</div>
+                <div class="col-lg-9 col-md-8">{{request.user.member.gender}} </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">ADRESSE</div>
+                <div class="col-lg-9 col-md-8">{{request.user.member.address}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">PROFESSION</div>
+                <div class="col-lg-9 col-md-8">{{request.user.member.profession}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Email</div>
+                <div class="col-lg-9 col-md-8">{{request.user.member.email}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">TELEPHONES</div>
+                <div class="col-lg-9 col-md-8">{{request.user.member.phone1}}</div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Déclartion du membre</div>
+                <div class="col-lg-9 col-md-8">{% if request.user.member.member_declaration %}<b class="text-success">
+                    confirmé</b>{%else%} <b class="text-danger"> non-confirmé </b>{% endif %} </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Déclartion sur la contribution</div>
+                <div class="col-lg-9 col-md-8">{% if request.user.member.monthly_contribution %}<b class="text-success">
+                    confirmé</b>{%else%} <b class="text-danger"> non-confirmé </b>{% endif %} </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Methode de payement</div>
+                <div class="col-lg-9 col-md-8">{{request.user.member.payment_method}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Methode de donation</div>
+                <div class="col-lg-9 col-md-8">{{request.user.member.donation_method}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Montant de donation</div>
+                <div class="col-lg-9 col-md-8">{{request.user.member.donation_amount}}</div>
+              </div>
+
+              {%else%}
+              <p>vous n'avez aucun information</p>
+              {% endif %}
+
+
+
+            </div>
+
+
+
+          </div><!-- End Bordered Tabs -->
+        </div>
+
+        <div class="tab-pane fade" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
+          <!-- About content goes here -->
+          <h3>Modifiez</h3>
+
+
+          <!-- Profile Edit Form -->
+          <form method="post" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+
+            {{form}}
+
+            <input type="submit" class="btn btn-primary" value="confirmer">
+
+          </form><!-- End settings Form -->
+
+
+        </div>
+
+
+
+        <div class="tab-pane fade" id="nav-friends" role="tabpanel" aria-labelledby="nav-friends-tab">
+          <!-- Friends content goes here -->
+          <h3>Communiqué</h3>
+          <p>pas de communiqués pour le moment</p>
+        </div>
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  </div>
+</div>
+</div>
+{%endblock content%}
